@@ -38,3 +38,7 @@ python-backend/*.spec
 
 # IDE / Antigravity
 .gemini/
+
+
+src-tauri/bin/
+src-tauri/binaries/

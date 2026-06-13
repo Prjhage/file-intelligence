@@ -209,22 +209,35 @@ export default function App() {
 
   // ── Backend Connectivity & Status ──────────────────────────────────────────
   useEffect(() => {
+    let timeoutId;
+
     const check = async () => {
       try {
         const r = await fetch(`${API}/status`, {
-          signal: getTimeoutSignal(3000),
+          signal: getTimeoutSignal(2000),
         });
         if (r.ok) {
           const data = await r.json();
           setBackendReady(data.ready_for_search ?? true);
           setIndexProgress(data);
+          // ✅ Once connected, slow down polling to save CPU
+          timeoutId = setTimeout(check, 3000);
+        } else {
+          setBackendReady(false);
+          // ✅ Retry faster when not connected
+          timeoutId = setTimeout(check, 500);
         }
       } catch (e) {
         setBackendReady(false);
+        // ✅ Retry every 500ms until connected
+        timeoutId = setTimeout(check, 500);
       }
-      setTimeout(check, 2000);
     };
+
     check();
+
+    // ✅ Cleanup on unmount
+    return () => clearTimeout(timeoutId);
   }, []);
 
   // ── Search Logic ──────────────────────────────────────────────────────────
@@ -260,7 +273,7 @@ export default function App() {
   const handleOpenFolder = useCallback(async (path) => {
     try {
       await invoke("open_folder", { path });
-    } catch (e) {}
+    } catch (e) { }
   }, []);
 
   const handleOpenFile = useCallback(
