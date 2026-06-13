@@ -40,5 +40,13 @@ python-backend/*.spec
 .gemini/
 
 
-src-tauri/bin/
-src-tauri/binaries/
+src-tauri/bin
+
+# Package lock files (optional, many devs exclude these)
+package-lock.json
+
+# Build artifacts
+build-windows-installer.bat
+
+# VS Code settings (personal, not needed by others)
+.vscode/
