@@ -57,7 +57,7 @@ body,
   cursor: pointer;
   box-shadow: -4px 0 12px rgba(0, 0, 0, 0.4);
   transition:
-    opacity 0.2s ease,
+    opacity 0.05s ease,
     width 0.15s ease,
     background 0.15s ease;
   z-index: 10;
@@ -71,6 +71,7 @@ body,
 .edge-tab.tab-hidden {
   opacity: 0;
   pointer-events: none;
+  transition: opacity 0.05s ease;
 }
 
 .tab-icon svg {
