@@ -1,0 +1,7 @@
+pymupdf
+python-docx
+openpyxl
+watchdog
+fastapi
+uvicorn[standard]
+slowapi
